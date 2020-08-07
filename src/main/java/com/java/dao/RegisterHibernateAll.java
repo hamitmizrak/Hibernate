@@ -13,9 +13,9 @@ public class RegisterHibernateAll {
  Create-Delete-Update için mutlaka Transaction yapmak gerekiyor. ancak select için transcation yapmıyoruz.
  Insert keyword= Persist()
  Delete keyword= remove()
- Update keyword=
+ Update keyword= find() merge()
  
- select keyword=
+ select keyword= find()
  
  */
 
@@ -89,6 +89,22 @@ public class RegisterHibernateAll {
 					System.err.println("Hibernate Nesne Güncelleme Sırasında Hata oluştu:"+e);
 					e.printStackTrace();
 				}
+		}
+		
+		
+		//select metodu
+		public static  Register  getRegisterSelectHibernate(Register  register,long ID) {
+			try {
+				entityManager= getEntityManagerConfig(entityManager);
+				register=entityManager.find(Register.class, ID);  //Register.class bunun adı class literal
+				entityManager.close();
+				System.out.println("Nesne Seçildi.:"+register.getRegisterId());
+			
+				}catch(Exception e){
+					System.err.println("Hibernate Nesne Listeleme Sırasında Hata oluştu:"+e);
+					e.printStackTrace();
+				}
+			return register;
 		}
 	
 }
