@@ -62,5 +62,33 @@ public class RegisterHibernateAll {
 				e.printStackTrace();
 			}
 		}
+		
+		
+		//update metodu
+		public static  Register  getRegisterFindHibernate(Register  register , long ID) {
+
+			try {
+				entityManager= getEntityManagerConfig(entityManager);
+				entityManager.getTransaction().begin(); 
+				register=entityManager.find(Register.class, ID);
+				}catch(Exception e){
+					System.err.println("Hibernate Nesne Güncelleme Sırasında Hata oluştu:"+e);
+					e.printStackTrace();
+				}
+			return register;
+		}
+		//update metodu
+		public static  void  getRegisterUpdateHibernate(Register  register) {
+
+			try {
+				entityManager.merge(register);// güncellemede persist  yerine merge kullanıyoruz.
+				entityManager.getTransaction().commit();
+				entityManager.close();
+				System.out.println("Register Güncellendi:"+register.getRegisterId());
+				}catch(Exception e){
+					System.err.println("Hibernate Nesne Güncelleme Sırasında Hata oluştu:"+e);
+					e.printStackTrace();
+				}
+		}
 	
 }
