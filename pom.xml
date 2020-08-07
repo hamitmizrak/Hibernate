@@ -14,7 +14,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
 
-  <dependencies>
+
     <dependencies>
        <!-- https://mvnrepository.com/artifact/com.sun.faces/mysql 8.0.13 -->
          <dependency>
@@ -31,5 +31,5 @@
 			<version>5.2.6.Final</version>
 		</dependency>
   </dependencies>
-  </dependencies>
+
 </project>
