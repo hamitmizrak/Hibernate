@@ -1,8 +1,13 @@
 package com.java.dao;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
+import javax.persistence.NonUniqueResultException;
 import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
 
 import com.java.dto.Register;
 
@@ -16,7 +21,8 @@ public class RegisterHibernateAll {
  Update keyword= find() merge()
  
  select keyword= find()
- 
+ single query= query.getSingleResult();
+ multi  query=
  */
 
 	private static EntityManagerFactory entityManagerFactory=null;
@@ -105,6 +111,49 @@ public class RegisterHibernateAll {
 					e.printStackTrace();
 				}
 			return register;
+		}
+		
+		
+		//QuerySingle metodu
+		public static  Register  getRegisterQuerySingleHibernate(Register  register,long ID) {
+			try {
+				entityManager= getEntityManagerConfig(entityManager);
+				String jpql="select register44 from Register as register44 where register44.registerId=:registerId2olan";
+				TypedQuery<Register> query=entityManager.createQuery(jpql,Register.class); 
+				query.setParameter(	"registerId2olan", ID);
+				register=query.getSingleResult();
+				entityManager.close();
+			}catch (NoResultException noResult) {
+				register=null;
+			}
+			catch (NonUniqueResultException nonResult) {
+				register=null;
+			}
+			return register;
+		}
+
+		//QueryList metodu
+		public static  List<Register>   getRegisterQueryListHibernate(List<Register> registerList,long ID) {
+			try {
+				entityManager= getEntityManagerConfig(entityManager);
+				//jpa query java ile sql birleşimi
+				//String jpql="select register44 from Register as register44"; // select register44 from Register register44  VEYA   from Register
+				//String jpql="select register44 from Register as register44 where register44.registerId=2";//VEYA Alttakini yap daha düzgün
+				String jpql="select register44 from Register as register44 where register44.registerId>:registerId2olan";
+				//String jpql="select register44 from Register as register44" + "where register44.registerId=:registerId2olan"; //böylede gösterilebilinir.
+				
+				TypedQuery<Register> query=entityManager.createQuery(jpql,Register.class);  // Bunun hemen altakinden farkı tür güvenliğini sağlıyor javax.persistence.Query
+				//Query query=entityManager.createQuery(jpql=java persistence query language); 
+				
+				query.setParameter(	"registerId2olan", ID);
+				registerList=query.getResultList();
+				entityManager.close();
+				}catch(Exception e){
+					System.err.println("Hibernate Nesne Listeleme Sırasında Hata oluştu:"+e);
+					e.printStackTrace();
+				}
+			return registerList;
+		
 		}
 	
 }
