@@ -1,4 +1,4 @@
-package com.java.test;
+package com.java.crud_test;
 
 import java.util.ArrayList;
 import java.util.List;

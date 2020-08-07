@@ -1,4 +1,4 @@
-package com.java.test;
+package com.java.crud_test;
 
 import com.java.dao.RegisterHibernateAll;
 import com.java.dto.Register;
